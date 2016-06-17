@@ -1,0 +1,31 @@
+{
+  "name": "rqcli",
+  "version": "1.3.0",
+  "description": "CLI for Udacity Review API",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trolster/rqcli.git"
+  },
+  "keywords": [
+    "cli",
+    "udacity",
+    "review",
+    "queue"
+  ],
+  "author": "Mikkel Trolle Larsen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trolster/rqcli/issues"
+  },
+  "bin": {
+    "rqcli": "./index.js"
+  },
+  "homepage": "https://github.com/trolster/rqcli#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "node-notifier": "^4.6.0",
+    "request": "^2.72.0"
+  }
+}
