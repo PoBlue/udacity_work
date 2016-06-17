@@ -94,8 +94,8 @@ program
               console.log(statusMessage.notFound + `name: ${elem.name}`)
               break
             case statusCode.sucessful:
-              notifyUserWithEmail(elem.name,res.body.price)
-              notifyUserWithReview(elem.name,res.body.price)
+              notifyUserWithEmail(elem.name,res.body.price,res.body.language)
+              notifyUserWithReview(elem.name,res.body.price,res.body.language)
               break
             case statusCode.maxNumAssigned:
               console.log(statusMessage.maximum)
@@ -112,9 +112,10 @@ program
       })
   })
 
-function notifyUserWithReview(name,price){
-  let blank = '------You have a Review--------\n'
-  var sucessfulMsg = blank + `Project: ${name} is in review,Price is ${price}` + blank
+function notifyUserWithReview(name,price,language){
+  var languageL = (language == statusMessage.english) ? '英文' : '中文'
+  let blank = '\n------You have a Review--------\n'
+  var sucessfulMsg = blank + `Project: ${name} is in review,Price is ${price}, Language: ${languageL}` + blank
   
   console.log(sucessfulMsg)
 
@@ -153,13 +154,15 @@ let statusCode = {
 }
 
 let statusMessage = {
+  english: 'en-us',
   notFound: ' ---not found---  ',
   maxNum: 'has the maximum unfinished reviews assigned',
   notAuthen: 'is not certified to review this project'  
 }
 
-function notifyUserWithEmail(name,price){
-  let message = `hello, You have a review: ${name},Price is ${price} d`
+function notifyUserWithEmail(name,price,language){
+  var languageL = (language == statusMessage.english) ? '英文' : '中文'
+  let message = `hello, You have a review: ${name},Price is ${price} d ,language is ${languageL}`
   var nodemailer = require("nodemailer");
   var smtpTransport = require('nodemailer-smtp-transport');
    
