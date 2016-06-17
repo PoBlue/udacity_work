@@ -47,7 +47,7 @@ module.exports = (task, method = 'GET', id = '') => {
         reject(err)
       } else if (res.statusCode === 401) {
         throw new Error('401: Unauthorized')
-      }
+      } 
       resolve(res)
     })
   })

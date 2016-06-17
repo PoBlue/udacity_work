@@ -88,8 +88,12 @@ program
   .action(() => {
       let projects = getProjectID()
       
-      projects.forEach( elem => {
-        console.log(`reviews:id:${elem.id},name:${elem.name}`)
+      projects.forEach(elem => {
+        apiCall('assign','GET',`${elem.id}`).then(res => {
+          console.log(res.body)
+          console.log(res)
+          console.log(`reviews:id:${elem.id},name:${elem.name}`)
+        })        
       })
   })
 
