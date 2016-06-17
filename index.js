@@ -87,37 +87,50 @@ program
   .description('assigned review for you')
   .action(() => {
       let projects = getProjectID()
-      
       projects.forEach(elem => {
         apiCall('assign','POST',`${elem.id}`).then(res => {
           switch (res.statusCode){
             case statusCode.notFound:
-              console.log('notFound'+` name:${elem.name}`)
-              console.log(res.body)
+              console.log(statusMessage.notFound + `name: ${elem.name}`)
               break
             case statusCode.sucessful:
+              notifyUserWithEmail(elem.name,res.body.price)
               notifyUserWithReview(elem.name,res.body.price)
               break
             case statusCode.maxNumAssigned:
-              console.log('max')
+              console.log(statusMessage.maximum)
               break
             case statusCode.notAuthen:
-              console.log('notAuthen')
+              console.log(statusMessage.notAuthen)
               break
             default:
-              console.log('error')
+              console.log(res)
+              console.log('error in review command')
               break
           } 
-          //console.log(res.body)
-          //console.log(res)
-          //console.log(`reviews:id:${elem.id},name:${elem.name}`)
         })        
       })
   })
 
 function notifyUserWithReview(name,price){
-  console.log(`Project: ${name} is in review,Price is ${price}`)
+  let blank = '------You have a Review--------\n'
+  var sucessfulMsg = blank + `Project: ${name} is in review,Price is ${price}` + blank
+  
+  console.log(sucessfulMsg)
+
+  notifier.notify({
+    title: 'Currently Assigned:',
+    message: sucessfulMsg,
+    open: `https://review.udacity.com/#!/submissions/dashboard`,
+    icon: path.join(__dirname, 'clipboard.svg'),
+    sound: 'Ping'
+    })
 }
+
+
+
+
+
 
 function getProjectID() {
   var projectIds = []
@@ -137,6 +150,48 @@ let statusCode = {
   notFound: 404,
   maxNumAssigned: 422,
   notAuthen: 403
+}
+
+let statusMessage = {
+  notFound: ' ---not found---  ',
+  maxNum: 'has the maximum unfinished reviews assigned',
+  notAuthen: 'is not certified to review this project'  
+}
+
+function notifyUserWithEmail(name,price){
+  let message = `hello, You have a review: ${name},Price is ${price} d`
+  var nodemailer = require("nodemailer");
+  var smtpTransport = require('nodemailer-smtp-transport');
+   
+  // 开启一个 SMTP 连接池
+  var transport = nodemailer.createTransport(smtpTransport({
+    host: "smtp.qq.com", // 主机
+    secure: true, // 使用 SSL
+    port: 465, // SMTP 端口
+    auth: {
+      user: "250299430@qq.com", // 账号
+      pass: "7123159a" // 密码
+    }
+  }));
+   
+   console.log("Hello")
+  // 设置邮件内容
+  var mailOptions = {
+    from: "MoMo <250299430@qq.com>", // 发件地址
+    to: "250299430@qq.com", // 收件列表
+    subject: "Review Robot", // 标题
+    html: message // html 内容
+  }
+   
+  // 发送邮件
+  transport.sendMail(mailOptions, function(error, response) {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('email send sucessful');
+    }
+    transport.close(); // 如果没用，关闭连接池
+  });
 }
 
 program.parse(process.argv)

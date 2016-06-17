@@ -25,6 +25,8 @@ function createEndpointsURL (task, id) {
   }[task]
 }
 
+
+
 /**
 * @desc apiCall Calls an endpoint.
 * @param {string} task The task to be requested
