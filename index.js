@@ -86,9 +86,21 @@ program
   .command('review')
   .description('assigned review for you')
   .action(() => {
-      console.log('reviews')
+      let projects = getProjectID()
+      console.log(`reviews:${projects[1].id}`)
   })
 
+function getProjectID() {
+  var projectIds = []
+  
+  config.certified.forEach(project => {
+    projectIds.push({
+      id: project.id,
+      name: project.name
+    })
+  })
 
+  return projectIds
+}
 
 program.parse(process.argv)
