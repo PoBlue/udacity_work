@@ -82,6 +82,13 @@ program
       })
   })
 
+program
+  .command('review')
+  .description('assigned review for you')
+  .action(() => {
+      console.log('reviews')
+  })
+
 
 
 program.parse(process.argv)
