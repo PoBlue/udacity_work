@@ -87,7 +87,10 @@ program
   .description('assigned review for you')
   .action(() => {
       let projects = getProjectID()
-      console.log(`reviews:${projects[1].id}`)
+      
+      projects.forEach( elem => {
+        console.log(`reviews:id:${elem.id},name:${elem.name}`)
+      })
   })
 
 function getProjectID() {
