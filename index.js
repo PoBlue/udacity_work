@@ -89,13 +89,35 @@ program
       let projects = getProjectID()
       
       projects.forEach(elem => {
-        apiCall('assign','GET',`${elem.id}`).then(res => {
-          console.log(res.body)
-          console.log(res)
-          console.log(`reviews:id:${elem.id},name:${elem.name}`)
+        apiCall('assign','POST',`${elem.id}`).then(res => {
+          switch (res.statusCode){
+            case statusCode.notFound:
+              console.log('notFound'+` name:${elem.name}`)
+              console.log(res.body)
+              break
+            case statusCode.sucessful:
+              notifyUserWithReview(elem.name,res.body.price)
+              break
+            case statusCode.maxNumAssigned:
+              console.log('max')
+              break
+            case statusCode.notAuthen:
+              console.log('notAuthen')
+              break
+            default:
+              console.log('error')
+              break
+          } 
+          //console.log(res.body)
+          //console.log(res)
+          //console.log(`reviews:id:${elem.id},name:${elem.name}`)
         })        
       })
   })
+
+function notifyUserWithReview(name,price){
+  console.log(`Project: ${name} is in review,Price is ${price}`)
+}
 
 function getProjectID() {
   var projectIds = []
@@ -108,6 +130,13 @@ function getProjectID() {
   })
 
   return projectIds
+}
+
+let statusCode = {
+  sucessful: 201,
+  notFound: 404,
+  maxNumAssigned: 422,
+  notAuthen: 403
 }
 
 program.parse(process.argv)
