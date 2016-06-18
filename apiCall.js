@@ -35,7 +35,11 @@ function createEndpointsURL (task, id) {
 * @return Promise with the response
 */
 module.exports = (task, method = 'GET', id = '') => {
-  var options = {
+  return requestInEnglish(task,method,id)
+}
+
+function requestInEnglish(task , method = 'GET' , id = '') {
+    var options = {
     'url': createEndpointsURL(task, id),
     'method': method,
     'headers': {
