@@ -91,7 +91,7 @@ program
         apiCall('assign','POST',`${elem.id}`).then(res => {
           switch (res.statusCode){
             case statusCode.notFound:
-              console.log(statusMessage.notFound + `name: ${elem.name}`)
+              console.log('Time: ' + statusMessage.currentTime + statusMessage.notFound + `name: ${elem.name}`)
               break
             case statusCode.sucessful:
               notifyUserWithEmail(elem.name,res.body.price,res.body.language)
@@ -115,7 +115,7 @@ program
 function notifyUserWithReview(name,price,language){
   var languageL = (language == statusMessage.english) ? '英文' : '中文'
   let blank = '\n------You have a Review--------\n'
-  var sucessfulMsg = blank + `Project: ${name} is in review,Price is ${price}, Language: ${languageL}` + blank
+  var sucessfulMsg = blank + `Project: ${name} is in review,Price is ${price}, Language: ${languageL} in Time: ${statusMessage.currentTime}` + blank
   
   console.log(sucessfulMsg)
 
@@ -154,6 +154,7 @@ let statusCode = {
 }
 
 let statusMessage = {
+  currentTime : new Date().toLocaleTimeString(),
   english: 'en-us',
   notFound: ' ---not found---  ',
   maxNum: 'has the maximum unfinished reviews assigned',
