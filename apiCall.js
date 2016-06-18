@@ -34,18 +34,44 @@ function createEndpointsURL (task, id) {
 * @param {string} id The id of the project or the submission
 * @return Promise with the response
 */
-module.exports = (task, method = 'GET', id = '') => {
-  return requestInEnglish(task,method,id)
+module.exports = (task, method = 'GET', id = '',isChinese=true) => {
+  if (isChinese){
+    return requestInChinese(task,method,id)
+  } else {
+    return requestInEnglish(task,method,id)
+  }
+}
+
+function requestInChinese(task,method = 'GET',id = ''){
+    var options = {
+    url : createEndpointsURL(task, id),
+    method : method,
+    headers : {
+      'Authorization': require('./apiConfig').token
+    },
+    json: true,
+    form: {lang:"zh-cn"}
+  }
+  return new Promise((resolve, reject) => {
+    request(options, (err, res, body) => {
+      if (err) {
+        reject(err)
+      } else if (res.statusCode === 401) {
+        throw new Error('401: Unauthorized')
+      } 
+      resolve(res)
+    })
+  })
 }
 
 function requestInEnglish(task , method = 'GET' , id = '') {
     var options = {
-    'url': createEndpointsURL(task, id),
-    'method': method,
-    'headers': {
+    url : createEndpointsURL(task, id),
+    method : method,
+    headers : {
       'Authorization': require('./apiConfig').token
     },
-    'json': true
+    json: true
   }
   return new Promise((resolve, reject) => {
     request(options, (err, res, body) => {

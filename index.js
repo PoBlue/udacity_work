@@ -89,28 +89,36 @@ program
       let projects = getProjectID()
       projects.forEach(elem => {
         apiCall('assign','POST',`${elem.id}`).then(res => {
-          switch (res.statusCode){
-            case statusCode.notFound:
-              console.log('Time: ' + statusMessage.currentTime + statusMessage.notFound + `name: ${elem.name}`)
-              break
-            case statusCode.sucessful:
-              notifyUserWithEmail(elem.name,res.body.price,res.body.language)
-              notifyUserWithReview(elem.name,res.body.price,res.body.language)
-              break
-            case statusCode.maxNumAssigned:
-              console.log(statusMessage.maximum)
-              break
-            case statusCode.notAuthen:
-              console.log(statusMessage.notAuthen)
-              break
-            default:
-              console.log(res)
-              console.log('error in review command')
-              break
-          } 
-        })        
+          sucessfulAction(res,elem) 
+        })
+        apiCall('assign','POST',`${elem.id}`,false).then(res => {
+          sucessfulAction(res,elem) 
+        })      
       })
   })
+
+function sucessfulAction(res,elem){
+  switch (res.statusCode){
+  case statusCode.notFound:
+    console.log('Time: ' + statusMessage.currentTime + statusMessage.notFound + `name: ${elem.name}`)
+    break
+  case statusCode.sucessful:
+    notifyUserWithEmail(elem.name,res.body.price,res.body.language)
+    notifyUserWithReview(elem.name,res.body.price,res.body.language)
+    break
+  case statusCode.maxNumAssigned:
+    console.log(statusMessage.maximum)
+    break
+  case statusCode.notAuthen:
+    console.log(statusMessage.notAuthen)
+    break
+  default:
+    console.log(res)
+    console.log('error in review command')
+    break
+}
+}
+
 
 function notifyUserWithReview(name,price,language){
   var languageL = (language == statusMessage.english) ? '英文' : '中文'
