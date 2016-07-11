@@ -105,6 +105,7 @@ function sucessfulAction(res,elem){
   case statusCode.sucessful:
     notifyUserWithEmail(elem.name,res.body.price,res.body.language)
     notifyUserWithReview(elem.name,res.body.price,res.body.language)
+    console.log(statusMessage.founded + elem.name)
     break
   case statusCode.maxNumAssigned:
     console.log(statusMessage.maximum)
@@ -165,6 +166,7 @@ let statusMessage = {
   currentTime : new Date().toLocaleTimeString(),
   english: 'en-us',
   notFound: ' ---not found---  ',
+  founded: 'one review is founded: ',
   maxNum: 'has the maximum unfinished reviews assigned',
   notAuthen: 'is not certified to review this project'  
 }
