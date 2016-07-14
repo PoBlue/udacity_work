@@ -69,7 +69,7 @@ program
           res.body.forEach(sub => {
             notifier.notify({
               title: 'Currently Assigned:',
-              message: `${sub.project.name}, ID: ${sub.id}`,
+              message: `${sub.project.name}, ID: ${sub.id}, Language: ${sub.language}`,
               open: `https://review.udacity.com/#!/submissions/${sub.id}`,
               icon: path.join(__dirname, 'clipboard.svg'),
               sound: 'Ping'
