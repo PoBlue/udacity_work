@@ -50,15 +50,19 @@ function requestInChinese(task,method = 'GET',id = ''){
       'Authorization': require('./apiConfig').token
     },
     json: true,
-    form: {lang:"zh-cn"}
+    form: {lang:"zh-cn"},
+    timeout: 20000
   }
   return new Promise((resolve, reject) => {
     request(options, (err, res, body) => {
       if (err) {
         reject(err)
+        if (err.code === 'ETIMEDOUT'){
+          throw new Error('time out\n')
+        }
       } else if (res.statusCode === 401) {
         throw new Error('401: Unauthorized')
-      } 
+      }
       resolve(res)
     })
   })
@@ -71,12 +75,16 @@ function requestInEnglish(task , method = 'GET' , id = '') {
     headers : {
       'Authorization': require('./apiConfig').token
     },
-    json: true
+    json: true,
+    timeout: 20000
   }
   return new Promise((resolve, reject) => {
     request(options, (err, res, body) => {
       if (err) {
         reject(err)
+        if (err.code === 'ETIMEDOUT'){
+          throw new Error('time out\n')
+        }        
       } else if (res.statusCode === 401) {
         throw new Error('401: Unauthorized')
       } 
