@@ -89,9 +89,9 @@ program
       let projects = getProjectID()
       projects.forEach(elem => {
         // //#TODO: chinese call
-        // apiCall('assign','POST',`${elem.id}`).then(res => {
-        //   sucessfulAction(res,elem) 
-        // })
+        apiCall('assign','POST',`${elem.id}`).then(res => {
+          sucessfulAction(res,elem) 
+        })
         apiCall('assign','POST',`${elem.id}`,false).then(res => {
           sucessfulAction(res,elem) 
         })
