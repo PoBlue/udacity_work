@@ -88,12 +88,14 @@ program
   .action(() => {
       let projects = getProjectID()
       projects.forEach(elem => {
-        apiCall('assign','POST',`${elem.id}`).then(res => {
-          sucessfulAction(res,elem) 
-        })
+        // //#TODO: chinese call
+        // apiCall('assign','POST',`${elem.id}`).then(res => {
+        //   sucessfulAction(res,elem) 
+        // })
         apiCall('assign','POST',`${elem.id}`,false).then(res => {
           sucessfulAction(res,elem) 
-        })      
+        })
+        sleep(400)
       })
   })
 
@@ -112,6 +114,9 @@ function sucessfulAction(res,elem){
     break
   case statusCode.notAuthen:
     console.log(statusMessage.notAuthen)
+    break
+  case statusCode.overRequest:
+    console.log(statusMessage.overRequest)
     break
   default:
     console.log(res)
@@ -159,7 +164,8 @@ let statusCode = {
   sucessful: 201,
   notFound: 404,
   maxNumAssigned: 422,
-  notAuthen: 403
+  notAuthen: 403,
+  overRequest: 429
 }
 
 let statusMessage = {
@@ -168,7 +174,8 @@ let statusMessage = {
   notFound: ' ---not found---  ',
   founded: 'one review is founded: ',
   maxNum: 'has the maximum unfinished reviews assigned',
-  notAuthen: 'is not certified to review this project'  
+  notAuthen: 'is not certified to review this project' ,
+  overRequest: 'too many request' 
 }
 
 function notifyUserWithEmail(name,price,language){
@@ -206,6 +213,15 @@ function notifyUserWithEmail(name,price,language){
     }
     transport.close(); // 如果没用，关闭连接池
   });
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
 
 program.parse(process.argv)
