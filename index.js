@@ -21,11 +21,12 @@ program
   })
 
 program
-  .command('test')
-  .action(() => {
+  .command('reqWithCert <second>')
+  .action(second => {
       getTokens().forEach(token => {
+        let time = parseFloat(second) * 1000
         certCheckAndAssign(token)
-        //sleep(800)
+        sleep(time)
       })    
   })
 
