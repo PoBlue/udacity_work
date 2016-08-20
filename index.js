@@ -23,28 +23,32 @@ program
 program
   .command('test')
   .action(() => {
-
-      certCheckAndAssign()
-      console.log(`${getTokens()}`)
-      })
+      getTokens().forEach(token => {
+        certCheckAndAssign(token)
+        //sleep(800)
+      })    
+  })
 
 //Mark take token
-function certCheckAndAssign() {
+function certCheckAndAssign(token) {
   let projectValues = getProjectIDvalues()
-
+  
   apiCall('certifications').then(res => {
     res.body.filter(elem => {
       let reviewCount = elem.project.awaiting_review_count
       let projectId = elem.project.id
 
+      //Mark should not equal 0
       if (reviewCount != 0 && projectValues.contains(projectId)){
         //Mark request
-        apiCall('assign','POST',`${elem.project.id}`).then(res => {
+        apiCall('assign','POST',`${elem.project.id}`,true,token).then(res => {
           sucessfulAction(res,elem.project) 
         })
-        apiCall('assign','POST',`${elem.project.id}`,false).then(res => {
+        apiCall('assign','POST',`${elem.project.id}`,false,token).then(res => {
           sucessfulAction(res,elem.project) 
         })
+      } else {
+        console.log(`not found in ${projectId} name:${elem.project.name}`)        
       }
     })
   })

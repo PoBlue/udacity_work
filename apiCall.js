@@ -34,11 +34,11 @@ function createEndpointsURL (task, id) {
 * @param {string} id The id of the project or the submission
 * @return Promise with the response
 */
-module.exports = (task, method = 'GET', id = '',isChinese=true) => {
+module.exports = (task, method = 'GET', id = '',isChinese=true,token=require('./apiConfig').token) => {
   if (isChinese){
-    return requestInChinese(task,method,id)
+    return requestInChinese(task,method,id,token)
   } else {
-    return requestInEnglish(task,method,id)
+    return requestInEnglish(task,method,id,token)
   }
 }
 
