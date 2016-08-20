@@ -7,6 +7,7 @@ const notifier = require('node-notifier')
 const apiCall = require('./apiCall')
 const config = require('./apiConfig')
 const open = require('open')
+const tokenJson = require('./tokens')
 
 /**
 * @desc Accepts a token and saves it to the config file.
@@ -18,6 +19,36 @@ program
     config.token = token
     fs.writeFileSync('apiConfig.json', JSON.stringify(config, null, 2))
   })
+
+program
+  .command('test')
+  .action(() => {
+
+      certCheckAndAssign()
+      console.log(`${getTokens()}`)
+      })
+
+//Mark take token
+function certCheckAndAssign() {
+  let projectValues = getProjectIDvalues()
+
+  apiCall('certifications').then(res => {
+    res.body.filter(elem => {
+      let reviewCount = elem.project.awaiting_review_count
+      let projectId = elem.project.id
+
+      if (reviewCount != 0 && projectValues.contains(projectId)){
+        //Mark request
+        apiCall('assign','POST',`${elem.project.id}`).then(res => {
+          sucessfulAction(res,elem.project) 
+        })
+        apiCall('assign','POST',`${elem.project.id}`,false).then(res => {
+          sucessfulAction(res,elem.project) 
+        })
+      }
+    })
+  })
+}
 
 /**
 * @desc Logs the users certifications to the console.
@@ -142,10 +173,36 @@ function notifyUserWithReview(name,price,language){
     })
 }
 
+function getTokens() {
+  var tokens = []
+
+  tokenJson.tokens.forEach(token =>{
+    tokens.push(token.value)
+  })
+
+  return tokens
+}
 
 
+function getProjectIDvalues(){
+  var projectIds = []
+  
+  config.certified.forEach(project => {
+    projectIds.push(project.id)
+  })
 
+  return projectIds
+}
 
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] == obj) {
+            return true;
+        }
+    }
+    return false;
+}
 
 function getProjectID() {
   var projectIds = []

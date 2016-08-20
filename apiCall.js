@@ -42,12 +42,12 @@ module.exports = (task, method = 'GET', id = '',isChinese=true) => {
   }
 }
 
-function requestInChinese(task,method = 'GET',id = ''){
+function requestInChinese(task,method = 'GET',id = '',token = require('./apiConfig').token){
     var options = {
     url : createEndpointsURL(task, id),
     method : method,
     headers : {
-      'Authorization': require('./apiConfig').token
+      'Authorization': token
     },
     json: true,
     form: {lang:"zh-cn"},
@@ -68,12 +68,12 @@ function requestInChinese(task,method = 'GET',id = ''){
   })
 }
 
-function requestInEnglish(task , method = 'GET' , id = '') {
+function requestInEnglish(task , method = 'GET' , id = '',token = require('./apiConfig').token) {
     var options = {
     url : createEndpointsURL(task, id),
     method : method,
     headers : {
-      'Authorization': require('./apiConfig').token
+      'Authorization': token
     },
     json: true,
     timeout: 20000
