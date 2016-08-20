@@ -23,8 +23,8 @@ program
 program
   .command('reqWithCert <second>')
   .action(second => {
+      let time = parseFloat(second) * 1000
       getTokens().forEach(token => {
-        let time = parseFloat(second) * 1000
         certCheckAndAssign(token)
         sleep(time)
       })    
@@ -33,9 +33,11 @@ program
 //Mark take token
 function certCheckAndAssign(token) {
   let projectValues = getProjectIDvalues()
+  let IsRequestOk = false
   
   apiCall('certifications').then(res => {
     res.body.filter(elem => {
+      IsRequestOk = true
       let reviewCount = elem.project.awaiting_review_count
       let projectId = elem.project.id
 
@@ -53,6 +55,10 @@ function certCheckAndAssign(token) {
       }
     })
   })
+
+  if (IsRequestOk == false){
+    console.log('request ok')
+  }
 }
 
 /**
