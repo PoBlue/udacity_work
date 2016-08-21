@@ -4,6 +4,6 @@ nvm use v6.2.2
 
 while true
 do
-    node index.js reqWithCert 1.5
+    node index.js reqWithCert 1
     sleep 1
 done
