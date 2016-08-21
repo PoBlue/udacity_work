@@ -8,7 +8,7 @@ const apiCall = require('./apiCall')
 const config = require('./apiConfig')
 const open = require('open')
 const tokenJson = require('./tokens')
-
+const defaultToken = config.token
 /**
 * @desc Accepts a token and saves it to the config file.
 */
@@ -35,7 +35,7 @@ function certCheckAndAssign(token) {
   let projectValues = getProjectIDvalues()
   let IsRequestOk = false
   
-  apiCall('certifications').then(res => {
+  apiCall('certifications','GET',"",false,token).then(res => {
     res.body.filter(elem => {
       IsRequestOk = true
       let reviewCount = elem.project.awaiting_review_count
@@ -44,14 +44,14 @@ function certCheckAndAssign(token) {
       //Mark should not equal 0
       if (reviewCount != 0 && projectValues.contains(projectId)){
         //Mark request
-        apiCall('assign','POST',`${elem.project.id}`,true,token).then(res => {
+        apiCall('assign','POST',`${elem.project.id}`,true,defaultToken).then(res => {
           sucessfulAction(res,elem.project) 
         })
-        apiCall('assign','POST',`${elem.project.id}`,false,token).then(res => {
+        apiCall('assign','POST',`${elem.project.id}`,false,defaultToken).then(res => {
           sucessfulAction(res,elem.project) 
         })
       } else {
-        console.log(`not found in ${projectId} name:${elem.project.name}`)        
+        console.log(`--${statusMessage.currentTime}--not found in ${projectId} name:${elem.project.name}`)        
       }
     })
   })
