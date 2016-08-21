@@ -62,6 +62,8 @@ function requestInChinese(task,method = 'GET',id = '',token = require('./apiConf
         }
       } else if (res.statusCode === 401) {
         throw new Error('401: Unauthorized')
+      } else if (res.statusCode === 429) {
+        throw new Error('429: cert too many')
       }
       resolve(res)
     })
@@ -87,7 +89,9 @@ function requestInEnglish(task , method = 'GET' , id = '',token = require('./api
         }        
       } else if (res.statusCode === 401) {
         throw new Error('401: Unauthorized')
-      } 
+      } else if (res.statusCode === 429) {
+        throw new Error('429: cert too many')
+      }
       resolve(res)
     })
   })
