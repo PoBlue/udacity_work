@@ -64,6 +64,9 @@ function requestInChinese(task,method = 'GET',id = '',token = require('./apiConf
         throw new Error('401: Unauthorized')
       } else if (res.statusCode === 429) {
         throw new Error('429: cert too many')
+      } else if (res.statusCode === 400) {
+        let time = new Date().toLocaleTimeString()
+        throw new Error('422: reach limit assign' + time)
       }
       resolve(res)
     })
@@ -91,7 +94,7 @@ function requestInEnglish(task , method = 'GET' , id = '',token = require('./api
         throw new Error('401: Unauthorized')
       } else if (res.statusCode === 429) {
         throw new Error('429: cert too many')
-      } else if (res.statusCode === 422) {
+      } else if (res.statusCode === 400) {
         let time = new Date().toLocaleTimeString()
         throw new Error('422: reach limit assign' + time)
       }

@@ -33,11 +33,9 @@ program
 //Mark take token
 function certCheckAndAssign(token) {
   let projectValues = getProjectIDvalues()
-  let IsRequestOk = false
   
   apiCall('certifications','GET',"",false,token).then(res => {
     res.body.filter(elem => {
-      IsRequestOk = true
       let reviewCount = elem.project.awaiting_review_count
       let projectId = elem.project.id
 
@@ -56,9 +54,7 @@ function certCheckAndAssign(token) {
     })
   })
 
-  if (IsRequestOk == false){
-    console.log('request ok')
-  }
+  console.log('request ok')
 }
 
 /**
