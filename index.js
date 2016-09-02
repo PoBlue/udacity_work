@@ -236,7 +236,7 @@ let statusMessage = {
   currentTime : new Date().toLocaleTimeString(),
   english: 'en-us',
   notFound: ' ---not found---  ',
-  founded: 'one review is founded: ',
+  founded: '888: one review is founded: ',
   maxNum: 'has the maximum unfinished reviews assigned',
   notAuthen: 'is not certified to review this project' ,
   overRequest: 'too many request' 
