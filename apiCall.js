@@ -66,7 +66,7 @@ function requestInChinese(task,method = 'GET',id = '',token = require('./apiConf
         throw new Error('429: cert too many')
       } else if (res.statusCode === 400) {
         let time = new Date().toLocaleTimeString()
-        throw new Error('422: reach limit assign' + time)
+        throw new Error('422: reach limit assign' + time + "\n" + res.body)
       }
       resolve(res)
     })
