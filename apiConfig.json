@@ -1,9 +1,13 @@
 {
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTQ0MywiZXhwIjoxNDczMjg4NjE1LCJ0b2tlbl90eXBlIjoiYXBpIn0.hYYYc6Bih4f9XUouYQkds5ANaVO4-Vsz4bnkChjawVs",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTQ0MywiZXhwIjoxNDc1ODQ0MTcxLCJ0b2tlbl90eXBlIjoiYXBpIn0.lQjwIlWsEHybLn0QIoCWtLq4OA_9s85kN5SbDImqySI",
   "certified": [
     {
       "name": "Alien Adventure 2: Collections, Enums, and Bits",
       "id": 98
+    },
+    {
+      "name": "My App Portfolio",
+      "id": 58
     },
     {
       "name": "Pirate Fleet 1: Ships, Mines, and Scores",
@@ -24,6 +28,10 @@
     {
       "name": "Alien Adventure 4: Errors and Closures",
       "id": 110
+    },
+    {
+      "name": "Pirate Fleet 2: Advanced Structs and Protocols",
+      "id": 101
     },
     {
       "name": "Robot Maze 2: Functions and Control Flow",

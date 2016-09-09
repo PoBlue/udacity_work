@@ -61,7 +61,7 @@ function requestInChinese(task,method = 'GET',id = '',token = require('./apiConf
           throw new Error('time out\n')
         }
       } else if (res.statusCode === 401) {
-        throw new Error('401: Unauthorized')
+        throw new Error('401: Unauthorized: ' + token)
       } else if (res.statusCode === 429) {
         throw new Error('429: cert too many')
       } else if (res.statusCode === 400) {
@@ -91,7 +91,7 @@ function requestInEnglish(task , method = 'GET' , id = '',token = require('./api
           throw new Error('time out\n')
         }        
       } else if (res.statusCode === 401) {
-        throw new Error('401: Unauthorized')
+        throw new Error('401: Unauthorized: ' + token)
       } else if (res.statusCode === 429) {
         throw new Error('429: cert too many')
       } else if (res.statusCode === 400) {
