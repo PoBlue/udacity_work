@@ -1,5 +1,5 @@
 {
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTQ0MywiZXhwIjoxNDc1ODQ0MTcxLCJ0b2tlbl90eXBlIjoiYXBpIn0.lQjwIlWsEHybLn0QIoCWtLq4OA_9s85kN5SbDImqySI",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTQ0MywiZXhwIjoxNDc5NzM0MTQyLCJ0b2tlbl90eXBlIjoiYXBpIn0.LRZsjKs-6VjZTKRzmj5g1VDEkOcs1KGhvlN6ibo9nwk",
   "certified": [
     {
       "name": "Alien Adventure 2: Collections, Enums, and Bits",
@@ -12,6 +12,10 @@
     {
       "name": "Pirate Fleet 1: Ships, Mines, and Scores",
       "id": 95
+    },
+    {
+      "name": "Tour guide app",
+      "id": 161
     },
     {
       "name": "Alien Adventure 3: Using Classes",
@@ -36,6 +40,26 @@
     {
       "name": "Robot Maze 2: Functions and Control Flow",
       "id": 96
+    },
+    {
+      "name": "Score Keeper",
+      "id": 157
+    },
+    {
+      "name": "ReportCard",
+      "id": 160
+    },
+    {
+      "name": "Your First App",
+      "id": 133
+    },
+    {
+      "name": "Quiz App",
+      "id": 158
+    },
+    {
+      "name": "Musical Structure",
+      "id": 159
     }
   ]
 }
